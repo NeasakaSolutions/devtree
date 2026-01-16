@@ -5,6 +5,9 @@ import router from "./router";
 // App de express:
 const app = express();
 
+// Leer datos de formularios:
+app.use(express.json());
+
 // Cargar rutas
 app.use("/", router);
 
