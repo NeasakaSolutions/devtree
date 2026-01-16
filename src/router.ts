@@ -1,16 +1,13 @@
 // Importaciones:
 import { Router } from "express";
+import { createAccount } from "./handlers";
 
 // Variables:
 const router = Router();
 
 // Enrutamientos:
 // Autenticacion y registro:
-router.post('/auth/register', (req, res) => { 
-    
-    // Retorno:
-    console.log(req.body);
-});
+router.post('/auth/register', createAccount);
 
 // Exportacion a otros archivos
 export default router
