@@ -3,7 +3,8 @@ import type { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import slug from "slug";
 import User from "../models/User";
-import { hashPassword } from "../utils/auth";
+import { checkPassword, hashPassword } from "../utils/auth";
+import { hash } from "bcrypt";
 
 // Funcion para crear usuario:
 export const createAccount = async(req: Request, res: Response) => { 
@@ -58,3 +59,46 @@ export const createAccount = async(req: Request, res: Response) => {
     });
 }
 
+// Funcion para login:
+export const login = async(req: Request, res: Response) => {
+    
+    // Manejo de errores:
+    let errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            errors: errors.array()
+        });
+    }
+
+    // Validar email:
+    const { email, password } = req.body
+    const user = await User.findOne({email}); // Buscar usuario con el email dado
+
+    if(!user){
+        const error = new Error("El usuario no existe.");
+
+        // Retorno
+        return res.status(404).json({
+            error : error.message
+        });
+    }
+
+    // Validar password:
+    const isPasswordCorrect = await checkPassword(password, user.password);
+
+    if(!isPasswordCorrect){
+        const error = new Error("Contraseña incorrecta.");
+
+        // Retorno
+        return res.status(401).json({
+            error : error.message
+        });
+    }
+
+    // Retorno:
+    res.status(200).json({
+        status: "success",
+        mensaje: "Sesion iniciada."
+    });
+};

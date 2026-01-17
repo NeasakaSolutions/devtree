@@ -11,3 +11,14 @@ export const hashPassword = async (password : string) => {
     return await bcrypt.hash(password, salt);
 };
 
+// Funcion para validar el password:
+export const checkPassword = async(enteredPassword: string, hash: string) => {
+    
+    // Comparar password:
+    const result = await bcrypt.compare(enteredPassword, hash);
+
+    // Retorno:
+    return result;
+
+};
+
