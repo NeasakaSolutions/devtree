@@ -9,15 +9,6 @@ import { hash } from "bcrypt";
 // Funcion para crear usuario:
 export const createAccount = async(req: Request, res: Response) => { 
 
-    // Manejo de errores:
-    let errors = validationResult(req);
-
-    if(!errors.isEmpty()){
-        return res.status(400).json({
-            errors: errors.array()
-        });
-    }
-
     // Validaciones:
     const { email, password } = req.body
     const userExists = await User.findOne({email}); // Buscar usuario con el email dado
@@ -61,15 +52,6 @@ export const createAccount = async(req: Request, res: Response) => {
 
 // Funcion para login:
 export const login = async(req: Request, res: Response) => {
-    
-    // Manejo de errores:
-    let errors = validationResult(req);
-
-    if(!errors.isEmpty()){
-        return res.status(400).json({
-            errors: errors.array()
-        });
-    }
 
     // Validar email:
     const { email, password } = req.body
