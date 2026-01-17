@@ -1,11 +1,21 @@
 // Importaciones:
 import type { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import slug from "slug";
 import User from "../models/User";
 import { hashPassword } from "../utils/auth";
 
 // Funcion para crear usuario:
 export const createAccount = async(req: Request, res: Response) => { 
+
+    // Manejo de errores:
+    let errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({
+            errors: errors.array()
+        });
+    }
 
     // Validaciones:
     const { email, password } = req.body
