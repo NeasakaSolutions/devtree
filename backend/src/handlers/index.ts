@@ -44,10 +44,7 @@ export const createAccount = async(req: Request, res: Response) => {
     await user.save();
 
     // Retorno:
-    res.json({
-        status: "success",
-        mensaje: "Usuario creado exitosamente."
-    });
+    res.send("Usuario creado correctamente.");
 }
 
 // Funcion para login:

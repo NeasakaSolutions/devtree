@@ -2,11 +2,17 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../components/ErrorMessage";
+import axios, { isAxiosError } from "axios";
+import type { RegisterForm } from "../types";
 
+// Importacion de la variables de entorno:
+const apiUrl = import.meta.env.VITE_API_URL;
+
+// Funcion principal:
 export default function RegisterView() {
 
     // Inicializar los valores de los input del formulario:
-    const initialValues = {
+    const initialValues : RegisterForm = {
         name: "",
         email: "",
         handle: "",
@@ -22,11 +28,24 @@ export default function RegisterView() {
      * handleSubmit: Maneja el envío del formulario.
      * errors: Contiene los errores de validacion de cada campo.
      */
-    const { register, watch, handleSubmit, formState: { errors } } = useForm({defaultValues : initialValues})
+    const { register, watch, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
 
-    // Funcion de handle register:
-    const handleRegister = () => {
-        console.log("handle register");
+    // Campo que se estara observando, se ocupa para validar que la password coincide
+    const password = watch("password")
+
+    // Funcion para capturar los datos del formulario:
+    const handleRegister = async(formData : RegisterForm) => {
+        
+        try {
+
+            const { data } = await axios.post(`${apiUrl}/auth/register`, formData);
+            console.log(data);
+        } catch(error){
+            
+            if(isAxiosError(error) && error.response){
+                console.log(error.response?.data.error);
+            }
+        };
     };
 
     return (
@@ -45,75 +64,84 @@ export default function RegisterView() {
                             required: "El nombre es obligatorio."
                         })}
                     />
-                    
+
                     {/* Muestra el mensaje de error si la validacion de "name" falla */}
                     {errors.name && <ErrorMessage>{errors.name!.message}</ErrorMessage>}
 
                 </div>
 
                 <div className="grid grid-cols-1 space-y-3">
-                    
+
                     <label htmlFor="email" className="text-2xl text-slate-500">E-mail</label>
                     <input id="email" type="email" placeholder="Email de Registro"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400 text-black"
                         {...register("email", { // Validaciones:
-                            required: "El correo es obligatorio."
+                            required: "El correo es obligatorio.",
+                            pattern: {
+                                value: /\S+@\S+\.\S+/,
+                                message: "Correo no válido",
+                            },
                         })}
-                        />
-                    
+                    />
+
                     {/* Muestra el mensaje de error si la validacion de "email" falla */}
-                    {errors.name && <ErrorMessage>{errors.email!.message}</ErrorMessage>}
-                
+                    {errors.email && <ErrorMessage>{errors.email!.message}</ErrorMessage>}
+
                 </div>
 
                 <div className="grid grid-cols-1 space-y-3">
-                    
+
                     <label htmlFor="handle" className="text-2xl text-slate-500">Handle</label>
                     <input id="handle" type="text" placeholder="Nombre de usuario: sin espacios"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400 text-black"
                         {...register("handle", { // Validaciones:
                             required: "El handle es obligatorio."
                         })}
-                        />
-                    
+                    />
+
                     {/* Muestra el mensaje de error si la validacion de "handle" falla */}
                     {errors.handle && <ErrorMessage>{errors.handle!.message}</ErrorMessage>}
-                
+
                 </div>
 
                 <div className="grid grid-cols-1 space-y-3">
-                    
+
                     <label htmlFor="password" className="text-2xl text-slate-500">Password</label>
                     <input id="password" type="password" placeholder="Password de Registro"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400 text-black"
                         {...register("password", { // Validaciones:
-                            required: "La contraseña es obligatoria."
+                            required: "La contraseña es obligatoria.",
+                            minLength: {
+                                value: 8,
+                                message: "La contraseña debe de ser minimo de 8 caracteres."
+                            }
                         })}
-                        />
+                    />
 
                     {/* Muestra el mensaje de error si la validacion de "password" falla */}
                     {errors.password && <ErrorMessage>{errors.password!.message}</ErrorMessage>}
-                
+
                 </div>
 
                 <div className="grid grid-cols-1 space-y-3">
-                    
+
                     <label htmlFor="password_confirmation" className="text-2xl text-slate-500">Repetir Password</label>
                     <input id="password" type="password" placeholder="Repetir Password"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400 text-black"
                         {...register("password_confirmation", { // Validaciones:
-                            required: "La contraseña no coincide."
+                            required: "La contraseña es obligatoria.",
+                            validate: (value) => value === password || "Las contraseñas no coinciden"
                         })}
-                        />
+                    />
 
                     {/* Muestra el mensaje de error si la validacion de "password_confirmation" falla */}
                     {errors.password_confirmation && <ErrorMessage>{errors.password_confirmation!.message}</ErrorMessage>}
-                
+
                 </div>
 
                 <input type="submit" value='Crear Cuenta'
-                    className="bg-cyan-400 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer"/>
-            
+                    className="bg-cyan-400 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer" />
+
             </form>
 
             <nav className="mt-10">
