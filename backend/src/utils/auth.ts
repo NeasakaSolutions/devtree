@@ -1,3 +1,11 @@
+/*
+ Utilidades de autenticación.
+ Este módulo contiene funciones para:
+ - Generar hashes seguros de contraseñas.
+ - Comparar contraseñas ingresadas con los hashes almacenados.
+ Se utiliza bcrypt para garantizar seguridad en el manejo de passwords.
+*/
+
 // Importaciones:
 import bcrypt from "bcrypt";
 

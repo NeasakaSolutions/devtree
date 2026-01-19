@@ -1,3 +1,9 @@
+/*
+ Definición de rutas de autenticación.
+ Aquí se configuran los endpoints para registro y login de usuarios,
+ incluyendo validaciones de datos y manejo de errores antes de llegar a los handlers.
+*/
+
 // Importaciones:
 import { Router } from "express";
 import { body } from  "express-validator";

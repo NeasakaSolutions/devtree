@@ -1,3 +1,13 @@
+/*
+ Configuración principal del servidor Express.
+ Este archivo se encarga de:
+ - Cargar variables de entorno.
+ - Conectar la base de datos.
+ - Configurar middlewares globales.
+ - Registrar las rutas de la API.
+ - Exportar la aplicación lista para ser iniciada.
+*/
+
 // Importaciones:
 import express from "express";
 import cors from "cors";

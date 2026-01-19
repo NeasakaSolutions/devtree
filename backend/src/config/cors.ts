@@ -1,10 +1,18 @@
+/*
+ Configuración de CORS.
+ Permite definir qué dominio (frontend) puede comunicarse con el backend.
+ Esto evita que otros sitios web hagan peticiones no autorizadas a la API.
+*/
+
 // Importaciones:
 import { CorsOptions } from "cors";
 
 // Variables de entorno:
 const apiUrlFront = process.env.VITE_FRONTEND_URL;
 
-export const corsConfig : CorsOptions= {
+// Configuración principal de CORS
+export const corsConfig : CorsOptions = {
+    // La función origin valida desde qué dominio llega la petició
     origin: function(origin, callback){
         
         if(origin === apiUrlFront){

@@ -1,3 +1,10 @@
+/*
+ Middleware para manejar errores de validación.
+ Revisa los resultados de express-validator y, si existen errores,
+ responde al cliente con un código 400 y no permite continuar la petición.
+ Si no hay errores, pasa al siguiente middleware o handler.
+*/
+
 // Importaciones:
 import type { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";

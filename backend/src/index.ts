@@ -1,3 +1,9 @@
+/*
+ Punto de entrada principal del servidor.
+ Este archivo se encarga de arrancar la aplicación Express
+ y ponerla a escuchar peticiones en el puerto configurado.
+*/
+
 // Importaciones:
 import colors from "colors";
 import server from './server';

@@ -1,3 +1,9 @@
+/*
+ Modelo de Usuario.
+ Define la estructura y reglas de los documentos de usuario en MongoDB.
+ También incluye una interfaz TypeScript para tipar correctamente los datos.
+*/
+
 // Importaciones:
 import mongoose, { Schema } from "mongoose";
 
