@@ -8,6 +8,7 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../components/ErrorMessage";
+import { toast } from "sonner";
 import axios, { isAxiosError } from "axios";
 import type { RegisterForm } from "../types";
 
@@ -45,11 +46,11 @@ export default function RegisterView() {
         try {
 
             const { data } = await axios.post(`${apiUrl}/auth/register`, formData);
-            console.log(data);
+            toast.success(data);
         } catch(error){
             
             if(isAxiosError(error) && error.response){
-                console.log(error.response?.data.error);
+                toast.error(error.response?.data.error);
             }
         };
     };

@@ -23,6 +23,10 @@
 - **Tailwind CSS**  
   Framework de estilos basado en clases utilitarias que permite diseñar interfaces de forma rápida y consistente.
 
+- **Sonner**  
+  Librería para mostrar notificaciones tipo *toast* de manera elegante y ligera, útil para informar al usuario sobre acciones exitosas, errores o advertencias en tiempo real.
+
+
 ---
 
 # Backend:
