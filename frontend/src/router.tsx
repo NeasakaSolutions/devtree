@@ -1,3 +1,8 @@
+// Configuración principal de rutas de la aplicación.
+// Define las URLs disponibles y qué vista renderizar.
+// Usa AuthLayout como estructura común para login y registro.
+// React Router maneja la navegación sin recargar la página.
+
 // Importaciones:
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginView from "./views/LoginView";

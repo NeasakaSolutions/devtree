@@ -1,3 +1,9 @@
+// Vista de registro de usuarios.
+// Contiene el formulario para crear una cuenta nueva.
+// Usa React Hook Form para validaciones y manejo de estado.
+// Envía los datos al backend mediante Axios.
+// Muestra mensajes de error con un componente reutilizable.
+
 // Importaciones:
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
